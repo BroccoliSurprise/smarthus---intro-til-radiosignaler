@@ -1,31 +1,61 @@
 
-> Open this page at [https://broccolisurprise.github.io/smarthus---intro-til-radiosignaler/](https://broccolisurprise.github.io/smarthus---intro-til-radiosignaler/)
+# Radiosignaler
+##Steg 0 @showdialog
+Dette eksempelet viser hvordan du sender signaler fra en micro:bit til en annen.
+Pass på at begge micro:bitene er stilt inn på samme kanal ("group"), og at ingen andre i rommet bruker samme tall.
+```blocks
+radio.setGroup(1)
+```
+##Steg 1 - forklaring
+Les koden under. 
+Ved Start bestemmer vi hvilken radiokanal micro:biten skal sende signaler på.
+Når Knapp B trykkes, sender micro:biten beskjeden "Hello world!"
+Trykk på knapp B på simulatoren til venstre og se hva som skjer.
 
-## Use as Extension
 
-This repository can be added as an **extension** in MakeCode.
+##Steg 2 -  enda mer forklaring 
+Antennen i simulatoren gløder for å vise at et signal sendes, og det dukker opp enda en micro:bit i simulatoren.
+Begge micro:bitene har det samme programmet.
+For øyeblikket skjer det skuffende lite hos mottakeren.
 
-* open [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* click on **New Project**
-* click on **Extensions** under the gearwheel menu
-* search for **https://github.com/broccolisurprise/smarthus---intro-til-radiosignaler** and import
+##Steg 3 - 
+Finn "on radio received receivedString"-blokken, og legg den til et sted i programmet.
+Denne blokken ligner veldig på "Når knapp B trykkes"-blokken, men i stedet for å kjøre kode når du trykker på en knapp, kjører den kode når den mottar en tekstmelding.
 
-## Edit this project ![Build status badge](https://github.com/broccolisurprise/smarthus---intro-til-radiosignaler/workflows/MakeCode/badge.svg)
+##Steg 4 -
+Hent en "vis tekst" blokk, og putt den inni "receivedNumber"-blokken. 
+Prøv å trykke på knapp B i simulatoren. Hva skjer med mottakeren?
+##Steg 5 - @showdialog
+Klikk og dra den runde "receivedString"-variabelen ned i vis tekst slik:
+```blocks
+radio.onReceivedString(function (receivedString) {
+    basic.showString(receivedString)
+})
+```
+##steg 6 - 
+Ser du noen forskjell når du trykker på knappen nå?
+##Steg 7 @showdialog
+Godt jobbet! 
+I den neste radio-veiledningen får du se eksempler på hvordan du kan bruke bluetooth-signaler for å fjernstyre motorer.
+##Steg 8 
+Trykk på Finish for å forlate veiledningen.
 
-To edit this repository in MakeCode.
+```template
+input.onButtonPressed(Button.B, function () {
+    radio.sendString("Hello world!")
+})
+radio.setGroup(1)
+```
+```ghost
+radio.onReceivedString(function (receivedString) {
+    basic.showString(receivedString)
+    basic.showString("Hello!")
+    radio.sendNumber(0)
+    basic.showNumber(0)
+})
+input.onButtonPressed(Button.B, function () {
+    radio.sendString("Hello world!")
+})
+radio.setGroup(1)
 
-* open [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* click on **Import** then click on **Import URL**
-* paste **https://github.com/broccolisurprise/smarthus---intro-til-radiosignaler** and click import
-
-## Blocks preview
-
-This image shows the blocks code from the last commit in master.
-This image may take a few minutes to refresh.
-
-![A rendered view of the blocks](https://github.com/broccolisurprise/smarthus---intro-til-radiosignaler/raw/master/.github/makecode/blocks.png)
-
-#### Metadata (used for search, rendering)
-
-* for PXT/microbit
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+```
