@@ -48,7 +48,6 @@ radio.setGroup(1)
 ```
 ```ghost
 radio.onReceivedString(function (receivedString) {
-    basic.showString(receivedString)
     basic.showString("Hello!")
     radio.sendNumber(0)
     basic.showNumber(0)
